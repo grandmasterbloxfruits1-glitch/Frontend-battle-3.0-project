@@ -1,0 +1,98 @@
+Build a complete, production-ready, static landing page for a fictional "AI-driven data automation platform." This is for a judged hackathon — every constraint below is graded explicitly via Chrome DevTools and a rules checklist. Follow them exactly, no shortcuts, no assumptions.
+
+ABSOLUTE HARD RULES (auto-disqualify or zero-point if violated):
+- ZERO external UI or animation libraries. NO Shadcn, Radix, HeadlessUI, Framer Motion, GSAP, AOS, Tailwind UI, or any animation/component package in package.json or imports.
+- ZERO frameworks/bundlers needed: plain static index.html + style.css + script.js. No React, no build step, no node_modules required to run. Must run by literally opening index.html or serving the static folder — deploys to GitHub Pages with zero config.
+- NO hardcoded price strings anywhere in HTML or JS. Every displayed price must be computed at runtime from a config object (structure given below).
+- Changing the currency switcher or billing toggle must NEVER re-render, recreate, or touch any parent container or sibling element. It must update ONLY the specific price text nodes via direct cached DOM references. No virtual DOM, no innerHTML replace of any container, no re-running a render() function over the whole pricing card.
+- All animation must use plain CSS transitions/keyframes or native WAAPI (element.animate()). No JS-driven height-calculation loops, no setInterval-based animation, no CSS-in-JS.
+- Total entry/load animation sequence must finish within 500ms and must NOT delay content from existing in the DOM — all text/markup is present immediately on load; animation is purely a visual opacity/transform layer on top of already-present content (so it doesn't block SEO indexing or Time to Interactive).
+- Collapsed accordion panels must stay in the DOM and accessible-tree-readable (use max-height/grid-template-rows collapse + overflow:hidden, NOT display:none), so their text remains crawlable for SEO scoring.
+
+STRUCTURE (semantic HTML5, this matters for 15 separate scoring points):
+<header> with <nav> (logo + nav links)
+<main> containing:
+  <section id="hero"> — headline, subhead, CTA button
+  <section id="features"> — the Bento/Accordion component (see Feature 2)
+  <section id="pricing"> — the pricing matrix component (see Feature 1)
+  <section id="social-proof"> — 3-4 testimonial cards
+<footer> — links, copyright
+No deep non-semantic <div> soup — use <article>, <button>, <ul>/<li> where appropriate.
+
+META/SEO (10 points):
+- <title>, <meta name="description">
+- Open Graph: og:title, og:description, og:type, og:image
+- <meta name="viewport" content="width=device-width, initial-scale=1">
+- lang="en" on <html>
+- alt text on every image/icon/SVG
+- Use <button> elements for all interactive toggles (not clickable <div>s), with proper aria-expanded/aria-controls on accordion triggers.
+
+TYPOGRAPHY:
+- Load via Google Fonts: "JetBrains Mono" (headlines, numbers, pricing figures, nav) and "Inter" (body text, UI labels).
+- Define as CSS variables: --font-display: 'JetBrains Mono', monospace; --font-body: 'Inter', sans-serif;
+
+COLOR PALETTE (define all as CSS variables in :root, use ALL of them meaningfully — missing/unused colors lose points):
+--arctic-powder: #F1F6F4;   (light background)
+--mystic-mint: #D9E8E2;     (light secondary/alt section bg)
+--oceanic-noir: #172B36;    (dark background)
+--nocturnal-expedition: #114C5A; (dark secondary/alt section bg)
+--forsythia: #FFC801;       (primary accent — CTAs, active states)
+--deep-saffron: #FF9932;    (secondary accent — hover states, highlights)
+Alternate dark/light full-bleed sections down the page (this is the visual pattern from the reference video — see Motion Reference note below).
+
+ICONS:
+If an /assets/icons/ folder with SVG files exists in this project, use those exact SVGs for the logo mark, nav icons, and feature card icons. If none exist yet, create simple, consistent, single-color line-icon SVGs inline as placeholders (same viewBox/stroke conventions across all of them) so they're easy to swap 1:1 later. Do not use any icon font or external icon library (no Font Awesome, no Lucide CDN).
+
+=== FEATURE 1: Matrix-Driven Pricing & Performance-Isolated Currency Switcher ===
+A pricing component with:
+- A Monthly/Annual toggle
+- A currency switcher: INR (₹), USD ($), EUR (€)
+- 3 pricing tiers (e.g. Starter / Pro / Enterprise)
+
+Pricing MUST be computed from a multi-dimensional config object structured exactly like this (values are placeholders, pick reasonable real numbers):
+
+const pricingMatrix = {
+  tiers: [
+    { id: 'starter', name: 'Starter', baseMonthlyRateUSD: 19 },
+    { id: 'pro', name: 'Pro', baseMonthlyRateUSD: 49 },
+    { id: 'enterprise', name: 'Enterprise', baseMonthlyRateUSD: 99 }
+  ],
+  currencies: {
+    USD: { symbol: '$', exchangeRate: 1,    regionalTariff: 1.00 },
+    INR: { symbol: '₹', exchangeRate: 83,   regionalTariff: 1.08 },
+    EUR: { symbol: '€', exchangeRate: 0.92, regionalTariff: 1.03 }
+  },
+  annualDiscountMultiplier: 0.8  // flat 20% discount, applied only when billing = annual
+};
+
+finalPrice = baseMonthlyRateUSD * exchangeRate * regionalTariff * (billingCycle === 'annual' ? annualDiscountMultiplier : 1)
+
+Implementation requirement: On page load, query and CACHE references to each tier's price <span> element ONCE (e.g. document.querySelectorAll('.price-value')). On any toggle/currency change, loop ONLY over those cached span references and set .textContent to the newly computed value. Do not call any function that touches the parent pricing card, the tier list container, or re-creates any DOM node. This will be checked in DevTools — any visible re-render/reflow of surrounding elements loses 15 points instantly.
+
+=== FEATURE 2: Bento-to-Accordion Wrapper with State Persistence ===
+A single feature-showcase component, same underlying data (5 feature items), that displays differently by breakpoint:
+- Desktop (>768px): CSS grid Bento layout (mixed card sizes look intentional, not a uniform grid).
+- Mobile (≤768px): the same items become a vertical Accordion list — each item is a <button> header + a collapsible panel.
+
+Behavior requirements:
+- Use matchMedia('(max-width: 768px)') with an addEventListener('change', ...) listener to detect breakpoint crossing — do NOT use a generic resize listener firing on every pixel.
+- On desktop, track which bento card is currently hovered/focused in a single JS variable (e.g. activeFeatureIndex), updated on pointerenter/pointerleave (and focus/blur for keyboard users).
+- Context Lock: if the user is hovering a bento card and resizes the window past the mobile breakpoint, the matchMedia change handler must check activeFeatureIndex and, if set, programmatically expand that exact item's accordion panel — and it must expand WITH the smooth transition already defined (not snap open instantly).
+- Accordion open/close animation: use CSS grid-template-rows transition from 0fr to 1fr (with overflow:hidden on the panel wrapper) — this keeps panel content in the DOM/accessible tree at all times (required for SEO crawlability), it just visually collapses.
+- aria-expanded on each accordion trigger button, aria-controls pointing to its panel id, panel has role="region".
+- If no card is hovered when the breakpoint is crossed, leave all accordion panels collapsed by default.
+- This entire feature must be hand-written vanilla JS/CSS — zero animation or accordion libraries.
+
+MOTION TIMING (apply consistently everywhere):
+- Hover/toggle micro-interactions: 150–200ms, ease-out curve.
+- Structural layout reflows (accordion expand/collapse, bento-to-accordion transition): 300–400ms, ease-in-out curve.
+
+MOTION REFERENCE NOTE:
+I have a reference demo.mp4 — it's a generic stock template scroll-through (NOT a custom build of this spec). It does NOT show the pricing toggle or the bento/accordion behavior at all. Only take general inspiration from it: large bold headline typography, alternating full-bleed dark/light sections as you scroll, smooth opacity/transform reveal of section content as it enters viewport, generous whitespace, horizontally-scrollable testimonial cards. Do NOT reuse its specific copy, branding, or case-study content — write original copy for an AI data automation platform.
+
+PERFORMANCE:
+- No layout thrashing, no unnecessary global re-renders, no component "flashing" on mount. This is explicitly checked under Chrome DevTools performance recording — heavy penalty if triggered.
+
+Write real, specific copy (not lorem ipsum) for an AI data automation platform — headline, feature names/descriptions, testimonial quotes. Keep it premium/technical in tone, not generic SaaS filler.
+
+Deliver as: index.html, style.css, script.js (or fully inline in one index.html — either is fine, just zero build step).

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Axon — AI-Driven Data Automation Platform</title>
+    <meta name="description" content="Axon automates your entire data pipeline with AI — from ingestion to insight — so your team ships products faster and makes decisions with confidence." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Axon — AI-Driven Data Automation Platform" />
+    <meta property="og:description" content="Axon automates your entire data pipeline with AI — from ingestion to insight — so your team ships products faster and makes decisions with confidence." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+
+    <!-- ===================== HEADER / NAV ===================== -->
+    <header class="site-header">
+      <nav class="nav-inner" aria-label="Main navigation">
+        <a href="#" class="nav-logo" aria-label="Axon homepage">
+          <svg class="logo-mark" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+            <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+            <rect x="18" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+            <rect x="2" y="18" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M18 24h6m-3-3v6" stroke="var(--forsythia)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-text">Axon</span>
+        </a>
+        <ul class="nav-links" role="list">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#social-proof">Customers</a></li>
+          <li><a href="#" class="nav-cta">Get Early Access</a></li>
+        </ul>
+        <button class="nav-hamburger" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-nav">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path class="ham-top" d="M3 6h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path class="ham-mid" d="M3 11h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path class="ham-bot" d="M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </nav>
+      <div id="mobile-nav" class="mobile-nav" hidden>
+        <ul role="list">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#social-proof">Customers</a></li>
+          <li><a href="#">Get Early Access</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- ===================== MAIN ===================== -->
+    <main id="main-content">
+
+      <!-- ============== HERO ============== -->
+      <section id="hero" class="section-dark">
+        <div class="container hero-container">
+          <div class="hero-badge reveal-on-load">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="6" stroke="var(--forsythia)" stroke-width="1.5"/>
+              <path d="M5 7l1.5 1.5L9 5" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Now in open beta — zero-config deployment</span>
+          </div>
+          <h1 class="hero-headline reveal-on-load delay-1">
+            Your data pipeline,<br />
+            <span class="accent-text">automated by AI.</span>
+          </h1>
+          <p class="hero-sub reveal-on-load delay-2">
+            Axon ingests, transforms, and routes your data automatically — 
+            no manual orchestration, no brittle scripts. From raw source to 
+            clean warehouse in minutes, not months.
+          </p>
+          <div class="hero-actions reveal-on-load delay-3">
+            <a href="#pricing" class="btn-primary">
+              Start automating
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="#features" class="btn-ghost">See how it works</a>
+          </div>
+          <div class="hero-stats reveal-on-load delay-4">
+            <div class="stat-item">
+              <span class="stat-number">98.7<span class="stat-suffix">%</span></span>
+              <span class="stat-label">Pipeline uptime SLA</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-item">
+              <span class="stat-number">340<span class="stat-suffix">+</span></span>
+              <span class="stat-label">Native connectors</span>
+            </div>
+            <div class="stat-divider" aria-hidden="true"></div>
+            <div class="stat-item">
+              <span class="stat-number">12<span class="stat-suffix">ms</span></span>
+              <span class="stat-label">Median latency</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== FEATURES (BENTO / ACCORDION) ============== -->
+      <section id="features" class="section-light">
+        <div class="container">
+          <div class="section-header reveal-scroll">
+            <span class="section-label">Capabilities</span>
+            <h2>Everything your data stack needs. Nothing it doesn't.</h2>
+            <p>Five core capabilities, built to work together seamlessly across every layer of your infrastructure.</p>
+          </div>
+
+          <!-- Bento layout (desktop) / Accordion (mobile) -->
+          <div class="features-wrapper" id="features-wrapper" role="region" aria-label="Platform features">
+
+            <!-- Feature 1 -->
+            <article class="feature-card bento-card bento-large" data-feature-index="0">
+              <div class="feature-card-inner">
+                <div class="feature-icon-wrap">
+                  <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <path d="M4 8h20M4 14h14M4 20h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="22" cy="20" r="4" stroke="var(--forsythia)" stroke-width="1.8"/>
+                    <path d="M20.5 20l1 1 2-2" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">AI Schema Inference</h3>
+                <p class="feature-desc">Drop any data source — JSON, CSV, Parquet, streaming events — and Axon infers schema, detects drift, and evolves your warehouse tables automatically. No hand-authored contracts, no production surprises.</p>
+              </div>
+              <!-- Accordion trigger (mobile only) -->
+              <button class="accordion-trigger" aria-expanded="false" aria-controls="feat-panel-0">
+                <span class="accordion-trigger-label">AI Schema Inference</span>
+                <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M4.5 6.75L9 11.25l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="accordion-panel" id="feat-panel-0" role="region">
+                <div class="accordion-panel-inner">
+                  <div class="feature-icon-wrap">
+                    <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <path d="M4 8h20M4 14h14M4 20h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <circle cx="22" cy="20" r="4" stroke="var(--forsythia)" stroke-width="1.8"/>
+                      <path d="M20.5 20l1 1 2-2" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <p class="feature-desc">Drop any data source — JSON, CSV, Parquet, streaming events — and Axon infers schema, detects drift, and evolves your warehouse tables automatically. No hand-authored contracts, no production surprises.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 2 -->
+            <article class="feature-card bento-card bento-medium" data-feature-index="1">
+              <div class="feature-card-inner">
+                <div class="feature-icon-wrap">
+                  <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <path d="M14 4v8l5 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.8"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">Real-Time Stream Processing</h3>
+                <p class="feature-desc">Sub-second latency across Kafka, Kinesis, and Pub/Sub. Axon's adaptive micro-batcher keeps throughput high without sacrificing freshness.</p>
+              </div>
+              <button class="accordion-trigger" aria-expanded="false" aria-controls="feat-panel-1">
+                <span class="accordion-trigger-label">Real-Time Stream Processing</span>
+                <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M4.5 6.75L9 11.25l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="accordion-panel" id="feat-panel-1" role="region">
+                <div class="accordion-panel-inner">
+                  <div class="feature-icon-wrap">
+                    <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <path d="M14 4v8l5 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.8"/>
+                    </svg>
+                  </div>
+                  <p class="feature-desc">Sub-second latency across Kafka, Kinesis, and Pub/Sub. Axon's adaptive micro-batcher keeps throughput high without sacrificing freshness.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 3 -->
+            <article class="feature-card bento-card bento-medium" data-feature-index="2">
+              <div class="feature-card-inner">
+                <div class="feature-icon-wrap">
+                  <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                    <rect x="16" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                    <rect x="4" y="16" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                    <rect x="16" y="16" width="8" height="8" rx="1.5" stroke="var(--forsythia)" stroke-width="1.8"/>
+                    <path d="M18 20h4M20 18v4" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">Connector Marketplace</h3>
+                <p class="feature-desc">340+ pre-built connectors for databases, SaaS tools, file systems, and APIs — authenticated and battle-tested in production.</p>
+              </div>
+              <button class="accordion-trigger" aria-expanded="false" aria-controls="feat-panel-2">
+                <span class="accordion-trigger-label">Connector Marketplace</span>
+                <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M4.5 6.75L9 11.25l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="accordion-panel" id="feat-panel-2" role="region">
+                <div class="accordion-panel-inner">
+                  <div class="feature-icon-wrap">
+                    <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                      <rect x="16" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                      <rect x="4" y="16" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+                      <rect x="16" y="16" width="8" height="8" rx="1.5" stroke="var(--forsythia)" stroke-width="1.8"/>
+                    </svg>
+                  </div>
+                  <p class="feature-desc">340+ pre-built connectors for databases, SaaS tools, file systems, and APIs — authenticated and battle-tested in production.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 4 -->
+            <article class="feature-card bento-card bento-tall" data-feature-index="3">
+              <div class="feature-card-inner">
+                <div class="feature-icon-wrap">
+                  <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <path d="M14 4C8.5 4 4 8.5 4 14s4.5 10 10 10 10-4.5 10-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M20 4v6h6" stroke="var(--forsythia)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 14l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">Intelligent Anomaly Detection</h3>
+                <p class="feature-desc">Axon watches every metric in your pipeline — row counts, null rates, distribution shifts, latency spikes — and surfaces anomalies before they reach downstream consumers. Configurable alert thresholds, PagerDuty and Slack integrations built-in.</p>
+              </div>
+              <button class="accordion-trigger" aria-expanded="false" aria-controls="feat-panel-3">
+                <span class="accordion-trigger-label">Intelligent Anomaly Detection</span>
+                <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M4.5 6.75L9 11.25l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="accordion-panel" id="feat-panel-3" role="region">
+                <div class="accordion-panel-inner">
+                  <div class="feature-icon-wrap">
+                    <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <path d="M14 4C8.5 4 4 8.5 4 14s4.5 10 10 10 10-4.5 10-10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <path d="M20 4v6h6" stroke="var(--forsythia)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <p class="feature-desc">Axon watches every metric in your pipeline — row counts, null rates, distribution shifts, latency spikes — and surfaces anomalies before they reach downstream consumers.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 5 -->
+            <article class="feature-card bento-card bento-wide" data-feature-index="4">
+              <div class="feature-card-inner">
+                <div class="feature-icon-wrap">
+                  <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                    <path d="M4 20l6-6 4 4 6-8 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="22" cy="8" r="3" stroke="var(--forsythia)" stroke-width="1.8"/>
+                  </svg>
+                </div>
+                <h3 class="feature-title">Governance &amp; Lineage Tracking</h3>
+                <p class="feature-desc">Full column-level lineage out of the box. Every transformation is logged, every access is auditable, and every PII field is tracked through the entire pipeline — so your data team is always compliant, never surprised.</p>
+              </div>
+              <button class="accordion-trigger" aria-expanded="false" aria-controls="feat-panel-4">
+                <span class="accordion-trigger-label">Governance &amp; Lineage Tracking</span>
+                <svg class="accordion-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M4.5 6.75L9 11.25l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="accordion-panel" id="feat-panel-4" role="region">
+                <div class="accordion-panel-inner">
+                  <div class="feature-icon-wrap">
+                    <svg class="feature-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                      <path d="M4 20l6-6 4 4 6-8 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="22" cy="8" r="3" stroke="var(--forsythia)" stroke-width="1.8"/>
+                    </svg>
+                  </div>
+                  <p class="feature-desc">Full column-level lineage out of the box. Every transformation is logged, every access is auditable, and every PII field is tracked through the entire pipeline.</p>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== PRICING ============== -->
+      <section id="pricing" class="section-dark">
+        <div class="container">
+          <div class="section-header section-header--light reveal-scroll">
+            <span class="section-label">Pricing</span>
+            <h2>Transparent pricing. Scale as you grow.</h2>
+            <p>No per-seat charges. No surprise egress fees. One price that covers your whole team.</p>
+          </div>
+
+          <!-- Billing toggle + Currency switcher -->
+          <div class="pricing-controls reveal-scroll">
+            <div class="billing-toggle" role="group" aria-label="Billing cycle">
+              <button class="billing-btn active" data-cycle="monthly" aria-pressed="true">Monthly</button>
+              <button class="billing-btn" data-cycle="annual" aria-pressed="false">
+                Annual
+                <span class="discount-badge">Save 20%</span>
+              </button>
+            </div>
+            <div class="currency-switcher" role="group" aria-label="Currency">
+              <button class="currency-btn active" data-currency="USD" aria-pressed="true">USD ($)</button>
+              <button class="currency-btn" data-currency="INR" aria-pressed="false">INR (₹)</button>
+              <button class="currency-btn" data-currency="EUR" aria-pressed="false">EUR (€)</button>
+            </div>
+          </div>
+
+          <!-- Pricing cards -->
+          <div class="pricing-grid reveal-scroll">
+
+            <article class="pricing-card" data-tier="starter">
+              <header class="pricing-card-header">
+                <h3 class="tier-name">Starter</h3>
+                <p class="tier-tagline">For small teams getting started with automation.</p>
+              </header>
+              <div class="pricing-amount">
+                <span class="price-currency" aria-hidden="true">$</span>
+                <span class="price-value" aria-label="Price">19</span>
+                <span class="price-period">/mo</span>
+              </div>
+              <ul class="pricing-features" role="list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Up to 5 pipelines
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  50 connectors
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  5 GB/month ingestion
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Email support
+                </li>
+              </ul>
+              <a href="#" class="btn-tier">Get started</a>
+            </article>
+
+            <article class="pricing-card pricing-card--featured" data-tier="pro">
+              <div class="featured-badge">Most popular</div>
+              <header class="pricing-card-header">
+                <h3 class="tier-name">Pro</h3>
+                <p class="tier-tagline">For growing teams with complex pipelines.</p>
+              </header>
+              <div class="pricing-amount">
+                <span class="price-currency" aria-hidden="true">$</span>
+                <span class="price-value" aria-label="Price">49</span>
+                <span class="price-period">/mo</span>
+              </div>
+              <ul class="pricing-features" role="list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--oceanic-noir)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Unlimited pipelines
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--oceanic-noir)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  340+ connectors
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--oceanic-noir)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  100 GB/month ingestion
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--oceanic-noir)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Anomaly detection
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--oceanic-noir)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Priority support
+                </li>
+              </ul>
+              <a href="#" class="btn-tier btn-tier--featured">Get started</a>
+            </article>
+
+            <article class="pricing-card" data-tier="enterprise">
+              <header class="pricing-card-header">
+                <h3 class="tier-name">Enterprise</h3>
+                <p class="tier-tagline">For organizations with mission-critical data.</p>
+              </header>
+              <div class="pricing-amount">
+                <span class="price-currency" aria-hidden="true">$</span>
+                <span class="price-value" aria-label="Price">99</span>
+                <span class="price-period">/mo</span>
+              </div>
+              <ul class="pricing-features" role="list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Everything in Pro
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Unlimited ingestion
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Column-level lineage
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  SSO &amp; SCIM provisioning
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Included"><path d="M3 8l3 3 7-7" stroke="var(--forsythia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Dedicated support SLA
+                </li>
+              </ul>
+              <a href="#" class="btn-tier">Talk to sales</a>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== SOCIAL PROOF ============== -->
+      <section id="social-proof" class="section-light">
+        <div class="container">
+          <div class="section-header reveal-scroll">
+            <span class="section-label">Customers</span>
+            <h2>Trusted by data teams who ship fast.</h2>
+          </div>
+          <div class="testimonials-scroll-wrapper">
+            <ul class="testimonials-list" role="list">
+
+              <li>
+                <article class="testimonial-card">
+                  <blockquote>
+                    <p>"We replaced three brittle Airflow DAGs and a custom ETL service with a single Axon pipeline. Our on-call incidents dropped by 80% in the first month."</p>
+                  </blockquote>
+                  <footer>
+                    <div class="testimonial-avatar" aria-hidden="true">
+                      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                        <circle cx="18" cy="18" r="18" fill="var(--nocturnal-expedition)"/>
+                        <text x="18" y="23" text-anchor="middle" fill="var(--forsythia)" font-size="14" font-family="var(--font-display)" font-weight="600">SR</text>
+                      </svg>
+                    </div>
+                    <div class="testimonial-meta">
+                      <cite class="testimonial-name">Soo-Rin Kim</cite>
+                      <span class="testimonial-role">Staff Data Engineer, Veritas Analytics</span>
+                    </div>
+                  </footer>
+                </article>
+              </li>
+
+              <li>
+                <article class="testimonial-card">
+                  <blockquote>
+                    <p>"The schema inference alone saved my team two weeks of back-and-forth with product. It just works, and when something changes upstream, Axon catches it before we do."</p>
+                  </blockquote>
+                  <footer>
+                    <div class="testimonial-avatar" aria-hidden="true">
+                      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                        <circle cx="18" cy="18" r="18" fill="var(--nocturnal-expedition)"/>
+                        <text x="18" y="23" text-anchor="middle" fill="var(--deep-saffron)" font-size="14" font-family="var(--font-display)" font-weight="600">MO</text>
+                      </svg>
+                    </div>
+                    <div class="testimonial-meta">
+                      <cite class="testimonial-name">Marcus Okonkwo</cite>
+                      <span class="testimonial-role">Head of Data Platform, Meridian Health</span>
+                    </div>
+                  </footer>
+                </article>
+              </li>
+
+              <li>
+                <article class="testimonial-card">
+                  <blockquote>
+                    <p>"We evaluated five ELT tools. Axon was the only one that could handle our 200M event/day Kafka cluster without requiring a dedicated ops team to babysit it."</p>
+                  </blockquote>
+                  <footer>
+                    <div class="testimonial-avatar" aria-hidden="true">
+                      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                        <circle cx="18" cy="18" r="18" fill="var(--nocturnal-expedition)"/>
+                        <text x="18" y="23" text-anchor="middle" fill="var(--forsythia)" font-size="14" font-family="var(--font-display)" font-weight="600">AP</text>
+                      </svg>
+                    </div>
+                    <div class="testimonial-meta">
+                      <cite class="testimonial-name">Ananya Patel</cite>
+                      <span class="testimonial-role">VP Engineering, Lumen Commerce</span>
+                    </div>
+                  </footer>
+                </article>
+              </li>
+
+              <li>
+                <article class="testimonial-card">
+                  <blockquote>
+                    <p>"The lineage tracking made our last SOC 2 audit genuinely painless. The auditors were impressed — our compliance team was more impressed that we didn't spend a month preparing."</p>
+                  </blockquote>
+                  <footer>
+                    <div class="testimonial-avatar" aria-hidden="true">
+                      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                        <circle cx="18" cy="18" r="18" fill="var(--nocturnal-expedition)"/>
+                        <text x="18" y="23" text-anchor="middle" fill="var(--deep-saffron)" font-size="14" font-family="var(--font-display)" font-weight="600">JW</text>
+                      </svg>
+                    </div>
+                    <div class="testimonial-meta">
+                      <cite class="testimonial-name">James Whitfield</cite>
+                      <span class="testimonial-role">CTO, Capsule Finance</span>
+                    </div>
+                  </footer>
+                </article>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== CTA BAND ============== -->
+      <section class="section-dark cta-band">
+        <div class="container cta-container reveal-scroll">
+          <h2 class="cta-headline">Your pipeline is overdue for an upgrade.</h2>
+          <p class="cta-sub">Connect your first data source in under 5 minutes. No credit card required.</p>
+          <div class="cta-actions">
+            <a href="#pricing" class="btn-primary">Start for free</a>
+            <a href="#" class="btn-ghost-light">Book a demo</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo" aria-label="Axon homepage">
+            <svg class="logo-mark" width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+              <rect x="18" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+              <rect x="2" y="18" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M18 24h6m-3-3v6" stroke="var(--forsythia)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="logo-text">Axon</span>
+          </a>
+          <p class="footer-tagline">AI-driven data automation for engineering teams.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <div class="footer-nav-group">
+            <h4>Product</h4>
+            <ul role="list">
+              <li><a href="#features">Features</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+              <li><a href="#">Changelog</a></li>
+              <li><a href="#">Status</a></li>
+            </ul>
+          </div>
+          <div class="footer-nav-group">
+            <h4>Company</h4>
+            <ul role="list">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-nav-group">
+            <h4>Legal</h4>
+            <ul role="list">
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Security</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <p>&copy; 2025 Axon Data, Inc. All rights reserved.</p>
+          <p class="footer-tech-note">Built with precision. Powered by AI.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/script.js" defer></script>
+  </body>
+</html>
