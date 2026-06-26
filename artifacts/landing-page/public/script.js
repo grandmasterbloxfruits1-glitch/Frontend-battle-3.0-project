@@ -1,252 +1,238 @@
 /**
  * Axon — AI Data Automation Platform
- * script.js — Vanilla JS, no libraries, no frameworks
+ * script.js — Vanilla JS only. Zero libraries. Zero frameworks.
  *
  * Features:
- *  1. Matrix-driven pricing with performance-isolated currency + billing toggle
- *  2. Bento-to-accordion wrapper with context lock on breakpoint crossing
- *  3. Scroll reveal via IntersectionObserver (CSS does the animation)
- *  4. Mobile nav toggle
+ *   1. Matrix-driven pricing — performance-isolated currency + billing toggle
+ *   2. Bento-to-accordion wrapper with context lock on breakpoint crossing
+ *   3. IntersectionObserver scroll-reveal (CSS does all animation)
+ *   4. Mobile nav toggle
  */
 
 /* ============================================================
-   FEATURE 1 — PRICING MATRIX
+   FEATURE 1: MATRIX-DRIVEN PRICING
    ============================================================ */
 
 const pricingMatrix = {
   tiers: [
-    { id: 'starter', name: 'Starter', baseMonthlyRateUSD: 19 },
-    { id: 'pro',     name: 'Pro',     baseMonthlyRateUSD: 49 },
-    { id: 'enterprise', name: 'Enterprise', baseMonthlyRateUSD: 99 }
+    { id: 'starter',    name: 'Starter',    baseMonthlyRateUSD: 19  },
+    { id: 'pro',        name: 'Pro',        baseMonthlyRateUSD: 49  },
+    { id: 'enterprise', name: 'Enterprise', baseMonthlyRateUSD: 99  }
   ],
   currencies: {
-    USD: { symbol: '$', exchangeRate: 1,    regionalTariff: 1.00 },
-    INR: { symbol: '₹', exchangeRate: 83,   regionalTariff: 1.08 },
-    EUR: { symbol: '€', exchangeRate: 0.92, regionalTariff: 1.03 }
+    USD: { symbol: '$',  exchangeRate: 1,    regionalTariff: 1.00 },
+    INR: { symbol: '₹',  exchangeRate: 83,   regionalTariff: 1.08 },
+    EUR: { symbol: '€',  exchangeRate: 0.92, regionalTariff: 1.03 }
   },
   annualDiscountMultiplier: 0.8
 };
 
-/* ---- Pricing state ---- */
+/* Pricing state */
 let currentCurrency = 'USD';
 let currentCycle    = 'monthly';
 
-/* ---- Cache price span references ONCE at page load ---- */
-const priceValueSpans    = document.querySelectorAll('.price-value');
-const priceCurrencySpans = document.querySelectorAll('.price-currency');
-
 /**
- * Compute the final price for a tier given current state.
- * Only reads pricingMatrix — does NOT touch the DOM.
+ * Cache DOM references once. Never query again after this.
+ * Pricing updates touch ONLY these cached nodes.
  */
+const cachedPriceVals = document.querySelectorAll('.price-val');
+const cachedPriceSyms = document.querySelectorAll('.price-sym');
+
 function computePrice(tier) {
   const c = pricingMatrix.currencies[currentCurrency];
   const cycleMult = currentCycle === 'annual' ? pricingMatrix.annualDiscountMultiplier : 1;
-  const raw = tier.baseMonthlyRateUSD * c.exchangeRate * c.regionalTariff * cycleMult;
-  return Math.round(raw);
+  return Math.round(tier.baseMonthlyRateUSD * c.exchangeRate * c.regionalTariff * cycleMult);
 }
 
 /**
  * Update ONLY the cached price text nodes and currency symbols.
- * Never touches a parent container or recreates any DOM node.
+ * This function never reads or writes any parent container.
+ * No innerHTML, no re-render, no DOM creation of any kind.
  */
 function updatePriceDisplay() {
   const c = pricingMatrix.currencies[currentCurrency];
-
-  priceValueSpans.forEach((span, i) => {
+  cachedPriceVals.forEach((span, i) => {
     const tier = pricingMatrix.tiers[i];
     if (!tier) return;
-    span.textContent = computePrice(tier);
-    span.setAttribute('aria-label', 'Price: ' + computePrice(tier) + ' ' + currentCurrency);
+    const computed = computePrice(tier);
+    span.textContent = computed;
+    span.setAttribute('aria-label', `Monthly price: ${c.symbol}${computed}`);
   });
-
-  priceCurrencySpans.forEach(span => {
+  cachedPriceSyms.forEach(span => {
     span.textContent = c.symbol;
   });
 }
 
-/* ---- Billing toggle ---- */
+/* Billing toggle */
 const billingBtns = document.querySelectorAll('.billing-btn');
-
 billingBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     if (btn.dataset.cycle === currentCycle) return;
     currentCycle = btn.dataset.cycle;
-
     billingBtns.forEach(b => {
-      const isActive = b.dataset.cycle === currentCycle;
-      b.classList.toggle('active', isActive);
-      b.setAttribute('aria-pressed', String(isActive));
+      const active = b.dataset.cycle === currentCycle;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', String(active));
     });
-
     updatePriceDisplay();
   });
 });
 
-/* ---- Currency switcher ---- */
+/* Currency switcher */
 const currencyBtns = document.querySelectorAll('.currency-btn');
-
 currencyBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     if (btn.dataset.currency === currentCurrency) return;
     currentCurrency = btn.dataset.currency;
-
     currencyBtns.forEach(b => {
-      const isActive = b.dataset.currency === currentCurrency;
-      b.classList.toggle('active', isActive);
-      b.setAttribute('aria-pressed', String(isActive));
+      const active = b.dataset.currency === currentCurrency;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-pressed', String(active));
     });
-
     updatePriceDisplay();
   });
 });
 
-/* Run once on load to set correct initial display */
+/* Initial render with default state */
 updatePriceDisplay();
 
 
 /* ============================================================
-   FEATURE 2 — BENTO / ACCORDION WITH CONTEXT LOCK
+   FEATURE 2: BENTO-TO-ACCORDION + CONTEXT LOCK
    ============================================================ */
 
-const featureCards    = document.querySelectorAll('.feature-card');
-const accordionPanels = document.querySelectorAll('.accordion-panel');
-const accordionTriggers = document.querySelectorAll('.accordion-trigger');
+const featureCards   = document.querySelectorAll('.feature-card');
+const accPanels      = document.querySelectorAll('.acc-panel');
+const accTriggers    = document.querySelectorAll('.acc-trigger');
 
-/* Single JS variable tracking which bento card is active/hovered */
+/**
+ * activeFeatureIndex — single JS variable tracking which bento
+ * card is actively hovered/focused on desktop.
+ * null = no active card.
+ */
 let activeFeatureIndex = null;
 
-/* ---- matchMedia — fires ONLY on breakpoint crossing, not every pixel ---- */
-const mobileQuery = window.matchMedia('(max-width: 768px)');
-let isMobile = mobileQuery.matches;
+/* matchMedia — fires ONLY on breakpoint crossing, not every pixel */
+const mobileBreakpoint = window.matchMedia('(max-width: 768px)');
+let isMobile = mobileBreakpoint.matches;
 
-/* ---- Bento hover tracking (desktop) ---- */
+/* ---- Bento hover/focus tracking (desktop) ---- */
 featureCards.forEach((card, index) => {
   card.addEventListener('pointerenter', () => {
     if (isMobile) return;
     activeFeatureIndex = index;
-    featureCards.forEach((c, i) => c.classList.toggle('bento-active', i === index));
   });
 
   card.addEventListener('pointerleave', () => {
     if (isMobile) return;
-    activeFeatureIndex = null;
-    featureCards.forEach(c => c.classList.remove('bento-active'));
+    /* Only clear if we're leaving this specific card */
+    if (activeFeatureIndex === index) activeFeatureIndex = null;
   });
 
-  card.addEventListener('focus', () => {
+  /* Keyboard accessibility */
+  card.addEventListener('focusin', () => {
     if (isMobile) return;
     activeFeatureIndex = index;
-  }, true);
+  });
 
-  card.addEventListener('blur', () => {
+  card.addEventListener('focusout', (e) => {
     if (isMobile) return;
-    activeFeatureIndex = null;
-  }, true);
-});
-
-/* ---- Accordion open/close (mobile) ---- */
-function openAccordion(index, instant) {
-  accordionPanels.forEach((panel, i) => {
-    const isTarget = i === index;
-    const trigger  = accordionTriggers[i];
-    if (isTarget) {
-      if (instant) {
-        /* Temporarily disable transition for instant open (context lock smooth requirement
-           is handled by the CSS transition already being defined — the class add triggers it) */
-        panel.style.transition = 'none';
-        panel.classList.add('is-open');
-        panel.removeAttribute('aria-hidden');
-        void panel.offsetHeight; /* force reflow to flush no-transition */
-        panel.style.transition = '';
-      } else {
-        panel.classList.add('is-open');
-        panel.removeAttribute('aria-hidden');
-      }
-      if (trigger) trigger.setAttribute('aria-expanded', 'true');
-    } else {
-      panel.classList.remove('is-open');
-      panel.setAttribute('aria-hidden', 'true');
-      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    /* Only clear if focus left this card entirely */
+    if (!card.contains(e.relatedTarget)) {
+      if (activeFeatureIndex === index) activeFeatureIndex = null;
     }
   });
-}
+});
 
-function closeAllAccordions() {
-  accordionPanels.forEach(panel => {
-    panel.classList.remove('is-open');
-    panel.setAttribute('aria-hidden', 'true');
+/* ---- Accordion helpers ---- */
+function openPanel(index) {
+  accPanels.forEach((panel, i) => {
+    const isTarget = (i === index);
+    panel.classList.toggle('is-open', isTarget);
+    panel.setAttribute('aria-hidden', String(!isTarget));
   });
-  accordionTriggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+  accTriggers.forEach((trigger, i) => {
+    trigger.setAttribute('aria-expanded', String(i === index));
+  });
 }
 
-accordionTriggers.forEach((trigger, index) => {
+function closeAllPanels() {
+  accPanels.forEach(p => {
+    p.classList.remove('is-open');
+    p.setAttribute('aria-hidden', 'true');
+  });
+  accTriggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+}
+
+/* ---- Accordion trigger click (mobile) ---- */
+accTriggers.forEach((trigger, index) => {
   trigger.addEventListener('click', () => {
-    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-    if (isOpen) {
-      /* Close this panel */
-      accordionPanels[index].classList.remove('is-open');
-      accordionPanels[index].setAttribute('aria-hidden', 'true');
+    const currentlyOpen = trigger.getAttribute('aria-expanded') === 'true';
+    if (currentlyOpen) {
+      /* Toggle closed */
+      accPanels[index].classList.remove('is-open');
+      accPanels[index].setAttribute('aria-hidden', 'true');
       trigger.setAttribute('aria-expanded', 'false');
     } else {
-      openAccordion(index, false);
+      openPanel(index);
     }
   });
 });
 
-/* ---- Context Lock: breakpoint crossing handler ---- */
+/* ---- Context Lock: breakpoint change handler ---- */
 function handleBreakpointChange(e) {
   isMobile = e.matches;
 
   if (isMobile) {
-    /* Switched to mobile */
-    featureCards.forEach(c => c.classList.remove('bento-active'));
-
+    /*
+     * Desktop → Mobile transition.
+     * If a bento card was hovered, transfer that context to the accordion.
+     * The CSS transition is already defined, so classList.add triggers
+     * the smooth grid-template-rows animation automatically.
+     */
     if (activeFeatureIndex !== null) {
-      /* Expand the previously hovered bento card WITH the CSS transition */
-      openAccordion(activeFeatureIndex, false);
+      openPanel(activeFeatureIndex);
     } else {
-      closeAllAccordions();
+      closeAllPanels();
     }
   } else {
-    /* Switched to desktop — close all accordions, clear bento active */
-    closeAllAccordions();
+    /*
+     * Mobile → Desktop transition.
+     * Close all accordion panels; reset bento state.
+     */
+    closeAllPanels();
     activeFeatureIndex = null;
-    featureCards.forEach(c => c.classList.remove('bento-active'));
   }
 }
 
-mobileQuery.addEventListener('change', handleBreakpointChange);
+mobileBreakpoint.addEventListener('change', handleBreakpointChange);
 
-/* ---- Initial accordion aria state setup ---- */
-accordionPanels.forEach(panel => {
-  panel.setAttribute('aria-hidden', 'true');
-});
+/* Init accordion aria state */
+accPanels.forEach(panel => panel.setAttribute('aria-hidden', 'true'));
 
 
 /* ============================================================
    SCROLL REVEAL — IntersectionObserver
-   CSS handles the actual opacity/transform animation
+   CSS handles opacity/transform transition (no JS animation loop)
    ============================================================ */
-
 const revealEls = document.querySelectorAll('.reveal-scroll');
 
 if ('IntersectionObserver' in window) {
-  const revealObserver = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target); /* reveal once */
+        observer.unobserve(entry.target); /* fire once */
       }
     });
   }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
   });
 
-  revealEls.forEach(el => revealObserver.observe(el));
+  revealEls.forEach(el => observer.observe(el));
 } else {
-  /* Fallback: show everything immediately for older browsers */
+  /* Fallback: show all immediately for older browsers */
   revealEls.forEach(el => el.classList.add('is-visible'));
 }
 
@@ -254,19 +240,16 @@ if ('IntersectionObserver' in window) {
 /* ============================================================
    MOBILE NAV TOGGLE
    ============================================================ */
-
 const hamburger = document.querySelector('.nav-hamburger');
 const mobileNav = document.getElementById('mobile-nav');
 
 if (hamburger && mobileNav) {
   hamburger.addEventListener('click', () => {
-    const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
-    const nextState = !isOpen;
-    hamburger.setAttribute('aria-expanded', String(nextState));
-    mobileNav.hidden = !nextState;
+    const open = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!open));
+    mobileNav.hidden = open;
   });
 
-  /* Close mobile nav when a link inside is clicked */
   mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.setAttribute('aria-expanded', 'false');
